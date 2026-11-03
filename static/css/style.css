@@ -1,0 +1,43 @@
+:root{
+  --primary:#1971f3;
+  --accent:#6f42c1;
+  --success:#20c997;
+  --muted:#6c757d;
+  --card-bg: #ffffff;
+  --page-bg: linear-gradient(180deg,#fbfdff,#f1f7ff);
+}
+
+body.bg-page{
+  background: var(--page-bg);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: #222;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 0;
+}
+
+.subject-card {
+  border-radius: 12px;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.subject-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(30,40,60,0.06);
+}
+
+.btn {
+  border-radius: 999px;
+}
+
+/* small polish for quiz buttons */
+.question-card .option { text-align: left; }
+.question-card .option.btn-success { box-shadow: inset 0 -3px 0 rgba(0,0,0,0.06); }
+.question-card .option.btn-danger { opacity: 0.95; }
+
+/* responsive tweaks */
+@media (max-width:768px){
+  .subject-card { padding: 20px; }
+}

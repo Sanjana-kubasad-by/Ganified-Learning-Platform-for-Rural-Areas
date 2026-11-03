@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Quiz: {{ subject|capitalize }}</h3>
+<div id="quiz-container">
+  {% for q in questions %}
+  <div class="card mb-3 question-card" data-qid="{{ q.id }}">
+    <div class="card-body">
+      <p><strong>Q{{ loop.index }}.</strong> {{ q.prompt }}</p>
+      <div>
+        <button class="option btn btn-outline-secondary me-2" data-choice="A">{{ q.A }}</button>
+        <button class="option btn btn-outline-secondary me-2" data-choice="B">{{ q.B }}</button>
+        <button class="option btn btn-outline-secondary me-2" data-choice="C">{{ q.C }}</button>
+        <button class="option btn btn-outline-secondary me-2" data-choice="D">{{ q.D }}</button>
+      </div>
+      <div class="mt-2"><small class="text-muted">Time: <span class="time">0</span>s</small></div>
+    </div>
+  </div>
+  {% endfor %}
+  <div><a class="btn btn-success" href="{{ url_for('student_dashboard') }}">Done</a></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const questionCards = document.querySelectorAll('.question-card');
+questionCards.forEach(card => {
+  let start = Date.now();
+  const timeEl = card.querySelector('.time');
+  // update a simple timer
+  const timer = setInterval(()=> {
+    timeEl.textContent = Math.floor((Date.now()-start)/1000);
+  }, 500);
+  card.querySelectorAll('.option').forEach(btn=>{
+    btn.addEventListener('click', async (e)=>{
+      clearInterval(timer);
+      const chosen = btn.dataset.choice;
+      const qid = card.dataset.qid;
+      const time_taken = (Date.now()-start)/1000;
+      // disable buttons
+      card.querySelectorAll('.option').forEach(x=> x.disabled=true);
+      // send via fetch
+      const resp = await fetch('/submit_answer', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({question_id: qid, chosen: chosen, time_taken: time_taken})
+      });
+      const j = await resp.json();
+      if(j.is_correct){
+        btn.classList.remove('btn-outline-secondary'); btn.classList.add('btn-success');
+      } else {
+        btn.classList.remove('btn-outline-secondary'); btn.classList.add('btn-danger');
+      }
+      // show points awarded
+      const msg = document.createElement('div');
+      msg.className = 'mt-2';
+      msg.innerHTML = `<small>Points: ${j.points} | Correct: ${j.is_correct}</small>`;
+      card.querySelector('.card-body').appendChild(msg);
+    });
+  });
+});
+</script>
+{% endblock %}

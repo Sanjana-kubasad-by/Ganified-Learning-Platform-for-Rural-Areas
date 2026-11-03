@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7 col-lg-5">
+    <div class="card shadow-sm rounded-4 animate__animated animate__fadeInUp">
+      <div class="card-body p-4">
+        <h4 class="mb-3 text-center">Create account</h4>
+        <form method="post">
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input name="username" required class="form-control" placeholder="choose a username">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input name="password" type="password" required class="form-control" placeholder="password">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Role</label>
+            <select name="role" class="form-select">
+              <option value="student" selected>Student</option>
+              <option value="teacher">Teacher</option>
+            </select>
+          </div>
+          <div class="d-grid">
+            <button class="btn btn-success btn-lg">Register</button>
+          </div>
+        </form>
+        <div class="text-center mt-3">
+          <small class="text-muted">Already registered? <a href="{{ url_for('login') }}">Login</a></small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

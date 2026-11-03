@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h3 class="mb-3 text-primary">Teacher Report</h3>
+  
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered shadow-sm">
+      <thead class="table-dark">
+        <tr>
+          <th>Student</th>
+          <th>Attempts</th>
+          <th>Correct</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in students %}
+          <tr>
+            <td>{{ s.username }}</td>
+            <td>{{ s.attempts }}</td>
+            <td>{{ s.correct }}</td>
+            <td>{{ s.points }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h4 class="mt-5 text-success">Graph: Student Points</h4>
+  <canvas id="pointsChart" width="600" height="250" class="border rounded shadow-sm p-3 bg-light"></canvas>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- ✅ Load Chart.js from CDN instead of static (more reliable) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const ctx = document.getElementById('pointsChart').getContext('2d');
+  const labels = {{ students|map(attribute='username')|list|tojson }};
+  const data = {{ students|map(attribute='points')|list|tojson }};
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Total Points',
+        data: data,
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Student Performance Overview',
+          color: '#333',
+          font: { size: 18, weight: 'bold' }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Points', color: '#555' }
+        },
+        x: {
+          title: { display: true, text: 'Students', color: '#555' }
+        }
+      }
+    }
+  });
+});
+</script>
+{% endblock %}

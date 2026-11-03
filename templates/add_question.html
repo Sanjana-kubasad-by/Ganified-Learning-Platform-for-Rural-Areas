@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <div class="card shadow-sm rounded-4 animate__animated animate__fadeInUp">
+      <div class="card-body">
+        <h5 class="mb-3"><i class="bi bi-plus-square me-2"></i>Add New Question</h5>
+        <form method="post">
+          <div class="mb-3">
+            <label class="form-label">Subject</label>
+            <select name="subject" class="form-select">
+              <option value="maths">Maths</option>
+              <option value="english">English</option>
+              <option value="gk">GK</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Question</label>
+            <input name="prompt" required class="form-control">
+          </div>
+          <div class="row g-2">
+            <div class="col-md-6 mb-2"><input name="a" placeholder="Option A" required class="form-control"></div>
+            <div class="col-md-6 mb-2"><input name="b" placeholder="Option B" required class="form-control"></div>
+            <div class="col-md-6 mb-2"><input name="c" placeholder="Option C" required class="form-control"></div>
+            <div class="col-md-6 mb-2"><input name="d" placeholder="Option D" required class="form-control"></div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Correct option (A/B/C/D)</label>
+            <input name="correct" maxlength="1" required class="form-control">
+          </div>
+          <div class="d-grid">
+            <button class="btn btn-primary">Add Question</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

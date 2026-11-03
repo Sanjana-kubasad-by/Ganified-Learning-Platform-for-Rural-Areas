@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row gy-4">
+  <div class="col-12">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <div>
+        <h3 class="fw-bold mb-0"><i class="bi bi-emoji-smile-fill text-warning me-2"></i>Hello, {{ current_user.username }}</h3>
+        <small class="text-muted">Keep learning — earn points & badges!</small>
+      </div>
+      <div>
+        <a class="btn btn-outline-secondary" href="{{ url_for('leaderboard') }}"><i class="bi bi-trophy me-1"></i>Leaderboard</a>
+      </div>
+    </div>
+
+    <div class="card p-3 shadow-sm rounded-4">
+      <div class="d-flex align-items-center justify-content-between">
+        <div>
+          <h6 class="mb-1">Total Points</h6>
+          <h2 class="mb-0">{{ progress.points }}</h2>
+          <small class="text-muted">Level {{ progress.level }}</small>
+        </div>
+        <div style="min-width:40%">
+          <div class="progress" style="height:18px;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+              style="width: {{ progress.points % 50 * 2 }}%">
+              {{ progress.points % 50 }} / 50
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subjects -->
+  <div class="col-12">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="card subject-card p-3 shadow-sm text-center animate__animated animate__fadeInUp">
+          <i class="bi bi-calculator-fill fs-1 text-primary mb-2"></i>
+          <h5>Mathematics</h5>
+          <p class="small text-muted">Quick numeric drills & puzzles</p>
+          <a class="btn btn-outline-primary" href="{{ url_for('quiz', subject='maths') }}">Start Quiz</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card subject-card p-3 shadow-sm text-center animate__animated animate__fadeInUp" style="animation-delay:.08s">
+          <i class="bi bi-book-half fs-1 text-success mb-2"></i>
+          <h5>English</h5>
+          <p class="small text-muted">Spelling, grammar, vocabulary</p>
+          <a class="btn btn-outline-success" href="{{ url_for('quiz', subject='english') }}">Start Quiz</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card subject-card p-3 shadow-sm text-center animate__animated animate__fadeInUp" style="animation-delay:.16s">
+          <i class="bi bi-globe-asia-australia fs-1 text-warning mb-2"></i>
+          <h5>General Knowledge</h5>
+          <p class="small text-muted">Facts about world & India</p>
+          <a class="btn btn-outline-warning" href="{{ url_for('quiz', subject='gk') }}">Start Quiz</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
